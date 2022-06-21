@@ -1,0 +1,183 @@
+#VRML_SIM R2022a utf8
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.22054768562437174 -0.1320834775739386 0.9663915734927059 4.1909047410217415
+  position 2.836136337943994 4.188539548314599 1.825713900174156
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 10 10
+}
+Robot {
+  translation 0.9681865004065421 -0.03501856397762994 0.4985322480685868
+  rotation 0.1517360598640604 0.706167576758025 -0.6915949115433322 0.08298724205222151
+  children [
+    DEF torso_front Shape {
+      appearance RoughPolymer {
+        baseColor 0 0 0
+      }
+      geometry Box {
+        size 0.4 0.4 0.1
+      }
+    }
+    Solid {
+      translation 0.28 0 0.23
+      children [
+        Shape {
+          appearance PBRAppearance {
+            metalness 0
+          }
+          geometry Box {
+            size 0.2 0.2 0.2
+          }
+        }
+        Solid {
+          translation 0.11 -0.06 0.04
+          rotation 0 1 0 1.5708
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0 0 0
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.05
+                radius 0.02
+              }
+            }
+          ]
+          name "eye_right"
+        }
+        Solid {
+          translation 0.11 0.04 0.04
+          rotation 0 1 0 1.5708
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0 0 0
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.05
+                radius 0.02
+              }
+            }
+            LightSensor {
+              name "lightSensor1"
+            }
+          ]
+          name "eye_left"
+        }
+      ]
+      name "head"
+    }
+    Solid {
+      translation 0.26044 0 0.0624781
+      rotation 0 1 0 2.87979
+      children [
+        DEF sphere1 Shape {
+          appearance PBRAppearance {
+            metalness 0
+          }
+          geometry Sphere {
+            radius 0.05
+          }
+        }
+        Solid {
+          translation -0.0445145 0 -0.0791461
+          rotation 0 -1 0 -0.523595307179586
+          children [
+            DEF cyl3 Shape {
+              appearance PBRAppearance {
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.15
+                radius 0.03
+              }
+            }
+          ]
+          boundingObject USE cyl3
+          physics DEF phy1 Physics {
+            mass 1
+          }
+        }
+        Solid {
+          translation 0.0534268 0 0.0197829
+          rotation 0 1 0 1.30899
+          children [
+            DEF cyl3 Shape {
+              appearance PBRAppearance {
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.15
+                radius 0.03
+              }
+            }
+          ]
+          name "solid(1)"
+          boundingObject USE cyl3
+          physics DEF phy1 Physics {
+            mass 1
+          }
+        }
+      ]
+      name "neck"
+      boundingObject USE sphere1
+      physics USE phy1
+    }
+    DEF body_joint HingeJoint {
+      jointParameters HingeJointParameters {
+      }
+      device [
+        RotationalMotor {
+          name "torso_joint"
+        }
+      ]
+      endPoint Solid {
+        translation -0.25 0 0
+        children [
+          DEF torso_joint_shape Shape {
+            appearance PBRAppearance {
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.1
+              radius 0.07
+            }
+          }
+          Solid {
+            translation -0.16 0 0
+            children [
+              DEF torso_back Shape {
+                appearance PBRAppearance {
+                  baseColor 0 0 0
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.2 0.4 0.1
+                }
+              }
+            ]
+            boundingObject USE torso_back
+            physics Physics {
+              mass 1
+            }
+          }
+        ]
+        boundingObject USE torso_joint_shape
+        physics Physics {
+          mass 1
+        }
+      }
+    }
+  ]
+  boundingObject USE torso_front
+  physics USE phy1
+  controller ""
+}
